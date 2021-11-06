@@ -1,7 +1,8 @@
 package io;
 
 
-import org.w3c.dom.Document;
+import org.jdom2.Document;
+import org.jdom2.JDOMException;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -28,7 +29,7 @@ public class MarkdownWriter {
     /**
      * Un escritor que genera un archivo markdown en resources con los datos aportados en una List<String>
      */
-    public void generarMarkdown() throws IOException, XPathExpressionException, ParserConfigurationException, SAXException {
+    public void generarMarkdown() throws IOException, XPathExpressionException, ParserConfigurationException, SAXException, JDOMException {
         List<String> texto = procesarMarkdown();
         nombreDoc = "informe";
         nombreCiudades.forEach(x -> nombreDoc = nombreDoc + "-" + x);
@@ -48,7 +49,7 @@ public class MarkdownWriter {
      * @throws IOException
      * @throws SAXException
      */
-    private List<String> procesarMarkdown() throws XPathExpressionException, ParserConfigurationException, IOException, SAXException {
+    private List<String> procesarMarkdown() throws XPathExpressionException, ParserConfigurationException, IOException, JDOMException, SAXException {
         List<String> textoMd = new LinkedList<>();
         Document d = ixr.leerInforme();
         XPath xp = XPathFactory.newInstance().newXPath();
