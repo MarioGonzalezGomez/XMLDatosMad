@@ -9,15 +9,33 @@ import java.sql.Time;
 @Data
 @NoArgsConstructor
 public class MedicionHora {
-    private float medicion;
-    private Time hora;
-    private String valida;
+    private Double medicion;
+    private String hora;
+    private String nulo;
 
-    public MedicionHora(float medicion, String valida, Time hora) {
+    public MedicionHora(Double medicion, String hora) {
         this.medicion = medicion;
         this.hora = hora;
-        this.valida= valida;
+
+    }
+    public MedicionHora(String nulo){
+        this.nulo=nulo;
+
 
     }
 
+
+    @Override
+    public String toString() {
+        if (medicion != null) {
+            return
+                    "Medicion= " + medicion +
+                    ",  Hora= " + hora + '\'';
+
+        } else {
+            return
+                    "Medicion= " + nulo;
+
+        }
+    }
 }
