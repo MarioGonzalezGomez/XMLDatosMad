@@ -1,9 +1,16 @@
 package service;
 
 import lombok.NoArgsConstructor;
+
 import java.util.HashMap;
 
-
+/**
+ * Esta clase contiene dos HashMap que nos serán de utilidad tanto en lectura como en escritura.
+ * En primer lugar, evitaremos posibles errores en la entrada de la ciudad, y utilizaremos
+ * el String normalizado para obtener su código y así sacar sus datos de la Base de Datos o del CSV.
+ * Por otro lado, también tenemos la operación inversa, que pasará de strings normalizados a bien
+ * acentuados y con correctas mayusculas de cara a escribirlas en los informes
+ */
 @NoArgsConstructor
 public class MapeoCiudadCodigo {
 

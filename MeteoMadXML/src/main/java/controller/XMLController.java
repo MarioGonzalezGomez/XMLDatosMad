@@ -4,17 +4,12 @@ package controller;
 import lombok.NonNull;
 import model.Medicion;
 import model.MedicionHora;
-import model.Mediciones;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import service.MapeoCiudadCodigo;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -22,7 +17,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
+
 
 /**
  * Clase que convierte los xml en objetos con el parser JAXB
@@ -58,8 +53,6 @@ public class XMLController {
         List<Medicion> medicionesLista = new ArrayList<>();
 
         MapeoCiudadCodigo mcc = new MapeoCiudadCodigo();
-
-//============================METERLE UN FILTRO POR CIUDAD =============================//
 
         listaMediciones.stream().filter(x -> x.getChild("puntoMuestreo").getText().substring(0, 8).equals(mcc.mapearCiudadCodigo().get(ciudad))).forEach(medicionElement -> {
             Medicion medicion = new Medicion();

@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -20,17 +19,35 @@ import java.util.List;
 
 public class HtmlWriter {
 
-
+    /**
+     * Este método utiliza la dirección introducida por el usuario para escribir en ella el documento html con el informe completo.
+     * Utiliza los datos ya mapeados en objetos Medicion, en dos listas: temperatura y contaminacion. Internamnete llama al método procesarHtml
+     *
+     * @param temperatura
+     * @param contaminacion
+     * @param initTime
+     * @param ruta
+     * @throws IOException
+     */
     public void generarHtml(List<Medicion> temperatura, List<Medicion> contaminacion, long initTime, Path ruta) throws IOException {
         List<String> texto = procesarHtml(temperatura, contaminacion, initTime);
         String nombreDoc = texto.get(0).toLowerCase() + ".html";
-       // Path path = Paths.get(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator
+        // Path path = Paths.get(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator
         //        + "resources" + File.separator + "informes" + File.separator + nombreDoc);
-       // Files.write(path, texto, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        // Files.write(path, texto, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         Files.write(ruta, texto, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
     }
 
+    /**
+     * Este método recibe los objetos con los datos ya procesados de medias y estadísticas para almacenarlos en una lista de String
+     * incorporando en ellas las etiquetas html necesarias para su correcta visualización en el navegador.
+     *
+     * @param temperatura
+     * @param contaminacion
+     * @param initTime
+     * @return
+     */
     private List<String> procesarHtml(List<Medicion> temperatura, List<Medicion> contaminacion, long initTime) {
         //Probablemente se reciba una lista de objetos informe o similar, y se hará el recorrido dependiendo del número de informees
         LocalDate ld = LocalDate.now();
@@ -58,6 +75,13 @@ public class HtmlWriter {
         return texto;
     }
 
+    /**
+     * Este método llama a la clase GeneradorGraficas para generar las imágenes que utilizaremos en el html. Estas se incorporan en el propio documento html
+     * y derivan de los mismos datos que se expondrán en el informe.
+     *
+     * @param datos
+     * @throws IOException
+     */
     private void generarGraficas(List<Medicion> datos) throws IOException {
         GeneradorGraficas gg = new GeneradorGraficas();
 

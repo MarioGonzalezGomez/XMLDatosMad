@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
 public class CSVController {
 
     private static CSVController controller;
-    private String uri=null;
+    private String uri;
     private Document data = null;
     private List<Element> listaElementos = new ArrayList<>();
     private BufferedReader bf =null;
@@ -36,7 +36,11 @@ public class CSVController {
         return controller;
     }
 
-    public void createLector() throws IOException {
+    /**
+     * Este método crea el lector necesario para obtener la información del CSV,
+     * mientras prepara el elemento Root para la generación del XML
+     */
+    public void createLector() {
         this.data = new Document();
         this.data.setRootElement(new Element("mediciones"));
 
@@ -47,8 +51,12 @@ public class CSVController {
         }
     }
 
-
-    public void convertCSVtoXML() throws IOException {
+    /**
+     * Este es el método que mapea los elementos del csv al xml. Utiliza el StringTokenizer para
+     * fragmentar la información y así poder añadirla elemento a elemento al xml teniendo en
+     * cuenta la posición
+     */
+    public void convertCSVtoXML() {
 
         createLector();
         String line;
@@ -86,12 +94,22 @@ public class CSVController {
 
     }
 
+    /**
+     * Preparación de los elementos para la escritura xml, utilizando
+     * el formato pretty para estructurarlo
+     * @return
+     */
     private XMLOutputter preProcess() {
         XMLOutputter xmlOutput = new XMLOutputter();
         xmlOutput.setFormat(Format.getPrettyFormat());
         return xmlOutput;
     }
 
+    /**
+     * Este método genera el xml con los datos obtenidos del mapeo en la uri especificada en el constructor
+     * @param uri
+     * @throws IOException
+     */
     public void writeXMLFile(String uri) throws IOException {
         XMLOutputter xmlOutput = this.preProcess();
         xmlOutput.output(this.data, new FileWriter(uri));

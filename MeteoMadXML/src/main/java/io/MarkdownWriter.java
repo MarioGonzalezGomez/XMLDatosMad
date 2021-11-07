@@ -49,7 +49,7 @@ public class MarkdownWriter {
      * @throws IOException
      * @throws SAXException
      */
-    private List<String> procesarMarkdown() throws XPathExpressionException, ParserConfigurationException, IOException, JDOMException, SAXException {
+    private List<String> procesarMarkdown() throws XPathExpressionException, IOException, JDOMException {
         List<String> textoMd = new LinkedList<>();
         Document d = ixr.leerInforme();
         XPath xp = XPathFactory.newInstance().newXPath();
