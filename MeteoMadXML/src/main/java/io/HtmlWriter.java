@@ -21,12 +21,13 @@ import java.util.List;
 public class HtmlWriter {
 
 
-    public void generarHtml(List<Medicion> temperatura, List<Medicion> contaminacion, long initTime) throws IOException {
+    public void generarHtml(List<Medicion> temperatura, List<Medicion> contaminacion, long initTime, Path ruta) throws IOException {
         List<String> texto = procesarHtml(temperatura, contaminacion, initTime);
         String nombreDoc = texto.get(0).toLowerCase() + ".html";
-        Path path = Paths.get(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator
-                + "resources" + File.separator + "informes" + File.separator + nombreDoc);
-        Files.write(path, texto, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+       // Path path = Paths.get(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator
+        //        + "resources" + File.separator + "informes" + File.separator + nombreDoc);
+       // Files.write(path, texto, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        Files.write(ruta, texto, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
     }
 
