@@ -4,21 +4,33 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
+@XmlRootElement(name="medicion")
+@XmlAccessorType(XmlAccessType.FIELD)
+
+
+
 public class Medicion {
     private String provincia;
     private String municipio;
     private String estacion;
-    private Float magnitud;
+    private int magnitud;
     private String puntoMuestreo;
     private int anio;
     private int mes;
     private int dia;
-    List<MedicionHora> MedicionesHoras;
+    List<MedicionHora> MedicionesHoras = new ArrayList<>();
+
 
     @Override
     public String toString() {
