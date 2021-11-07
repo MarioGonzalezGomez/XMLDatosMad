@@ -13,8 +13,8 @@ public class Informe {
     private LocalDate fechaInicioMedicion;
     private LocalDate fechaFinMedicion;
     private String estacionesAsociadas;
-    private List<Object> informacionMeteorologica;
-    private List<Object> informacionContaminacion;
+    private List<InformacionMedicion> informacionMeteorologica;
+    private List<InformacionMedicion> informacionContaminacion;
 
     @Override
     public String toString() {

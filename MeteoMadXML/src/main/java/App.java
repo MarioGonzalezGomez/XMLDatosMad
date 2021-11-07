@@ -11,11 +11,11 @@ import java.util.List;
 public class App {
     public static void main(String[] args) throws IOException, JDOMException, JAXBException {
 
-        String urlXMLTemperatura = System.getProperty("user.dir") + File.separator + "MeteoMadXML" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "Temperatura.xml";
-        String urlXMLContaminacion = System.getProperty("user.dir") + File.separator + "MeteoMadXML" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "Contaminacion.xml";
+        String urlXMLTemperatura = System.getProperty("user.dir") +  File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "Temperatura.xml";
+        String urlXMLContaminacion = System.getProperty("user.dir")  + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "Contaminacion.xml";
 
-        String urlCSVMeteo = System.getProperty("user.dir") + File.separator + "MeteoMadXML" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "calidad_aire_datos_meteo_mes.csv";
-        String urlCSVContaminacion = System.getProperty("user.dir") + File.separator + "MeteoMadXML" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "calidad_aire_datos_mes.csv";
+        String urlCSVMeteo = System.getProperty("user.dir")  + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "calidad_aire_datos_meteo_mes.csv";
+        String urlCSVContaminacion = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "calidad_aire_datos_mes.csv";
 
     //=======================CONVERSION DE CSV A XML TEMPERATURA===============================//
         CSVController CSVTemperatura = CSVController.getInstance(urlCSVMeteo);
