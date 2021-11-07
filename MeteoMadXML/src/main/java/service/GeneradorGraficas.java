@@ -11,6 +11,15 @@ import java.util.List;
 
 public class GeneradorGraficas {
 
+    /**
+     * Utilizando la librería JFreeChart, esta clase implementa el código necesario para generar las gráficas de las
+     * mediciones. Adicionalmente, utiliza condiciones con un index para poder hacer gráficos personalizados y
+     * más adecuados para cada tipo de dato
+     * @param mediciones
+     * @param index
+     * @param nombreTabla
+     * @return
+     */
     public JFreeChart hacerGrafica(List<Medicion> mediciones, int index, String nombreTabla) {
         JFreeChart grafica = null;
         //Para las gráficas de pastel debemos hacer DefaultPieDataset
