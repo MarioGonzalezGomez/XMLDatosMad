@@ -21,6 +21,8 @@ import java.util.List;
 
 
 public class Medicion {
+    private String nombreMedicion;
+    private String unidadMedida;
     private String provincia;
     private String municipio;
     private String estacion;

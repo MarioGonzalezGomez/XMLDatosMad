@@ -1,12 +1,19 @@
 package model;
 
 public class InformacionMedicion {
-
+    private String nombreMedicion;
     private Double mediaMensual;
     private String momentoYMaxima;
     private String momentoYMinima;
     private Object grafica; ///cambiar a JFreeChart tanto aqui como en getters y setters
 
+    public String getNombreMedicion() {
+        return nombreMedicion;
+    }
+
+    public void setNombreMedicion(String nombreMedicion) {
+        this.nombreMedicion = nombreMedicion;
+    }
 
     public Double getMediaMensual() {
         return mediaMensual;

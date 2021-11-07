@@ -4,17 +4,12 @@ package controller;
 import lombok.NonNull;
 import model.Medicion;
 import model.MedicionHora;
-import model.Mediciones;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import service.MapeoCiudadCodigo;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -22,15 +17,14 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 /**
  * Clase que convierte los xml en objetos con el parser JAXB
  */
 public class XMLController {
-    private static XMLController controller;
-    private String uri;
-    private Document data;
+    private static XMLController controller=null;
+    private String uri=null;
+    private Document data=null;
 
     //Se le pasa la uri del XML que vamos a mapear
     private XMLController(String uri) {
@@ -38,14 +32,13 @@ public class XMLController {
     }
 
     public static XMLController getInstance(@NonNull String uri) {
-        if (controller == null) {
             controller = new XMLController(uri);
-        }
         return controller;
     }
 
     public void loadData() throws IOException, JDOMException {
-        // JDOM Document trabaja con DOM, SAX y STAX Parser Builder classes
+        data= new Document();
+        this.data=data;
         SAXBuilder builder = new SAXBuilder();
         File xmlFile = new File(this.uri);
         this.data = builder.build(xmlFile);
@@ -72,7 +65,7 @@ public class XMLController {
             medicion.setMes(Integer.parseInt(medicionElement.getChildText("mes")));
             medicion.setDia(Integer.parseInt(medicionElement.getChildText("dia")));
 
-            for (int i = 1; i < 24; i++) {
+            for (int i = 1; i <= 24; i++) {
                 if (!medicionElement.getChildText("h" + i).contains("null")) {
                     NumberFormat nf = NumberFormat.getInstance(Locale.GERMAN);
                     try {
@@ -84,8 +77,8 @@ public class XMLController {
                     }
                 } else {
 
-                    MedicionHora nulo = new MedicionHora("nulo");
-                    medicion.getMedicionesHoras().add(nulo);
+                    MedicionHora medicionHora = new MedicionHora(null, null);
+                    medicion.getMedicionesHoras().add(medicionHora);
                 }
 
             }
