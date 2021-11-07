@@ -51,7 +51,7 @@ public class CSVController {
     public void convertCSVtoXML() throws IOException {
 
         createLector();
-        String line = null;
+        String line;
         try {
             while ((line = this.bf.readLine()) != null) { //***********************************//
                 if (!line.contains("provincia")) {
@@ -81,7 +81,7 @@ public class CSVController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Element root = (Element) this.data.getRootElement();
+        Element root = this.data.getRootElement();
         root.addContent(listaElementos);
 
     }
