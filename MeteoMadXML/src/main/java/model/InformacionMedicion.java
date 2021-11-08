@@ -7,6 +7,9 @@ public class InformacionMedicion {
     private String momentoYMinima;
     private Object grafica; ///cambiar a JFreeChart tanto aqui como en getters y setters
 
+
+
+
     public String getNombreMedicion() {
         return nombreMedicion;
     }

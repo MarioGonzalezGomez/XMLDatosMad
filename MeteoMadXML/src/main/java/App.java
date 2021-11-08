@@ -54,6 +54,7 @@ public class App {
             List<InformacionMedicion> infor = mc.getEstatisticsMeteo();
 
 
+
             //long initTime = System.currentTimeMillis();
             //HtmlWriter htmlW = new HtmlWriter();
         }

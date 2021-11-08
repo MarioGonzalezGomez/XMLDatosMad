@@ -72,11 +72,13 @@ public class MeteoController {
      * @param medicionesPorEstadistica
      * @return
      */
+
+
     public InformacionMedicion generarEstadisticas(List<Medicion>medicionesPorEstadistica) {
 
         DoubleSummaryStatistics estadisticas = new DoubleSummaryStatistics();
         InformacionMedicion infoMedicion = new InformacionMedicion();
-
+        List<DoubleSummaryStatistics>listaEstadisticas = new ArrayList<>();
         //PROBLEMA : en estadisticas solo se introducen 24, las de 1 dia. Necesito las 24 de los 27 dias.
 
         for (Medicion med : medicionesPorEstadistica
@@ -85,13 +87,14 @@ public class MeteoController {
                     .filter(me -> me.getMedicion() != null)
                     .collect(Collectors.summarizingDouble(MedicionHora::getMedicion));
 
+            listaEstadisticas.add(estadisticas);
 
         }
-
-        infoMedicion.setMomentoYMaxima(String.valueOf(estadisticas.getMax()));
-        infoMedicion.setMomentoYMinima(String.valueOf(estadisticas.getMin()));
-        infoMedicion.setMediaMensual(estadisticas.getAverage());
-
+        /*
+        infoMedicion.setMomentoYMaxima(listaEstadisticas.stream().map(x->x.getMax()));
+        infoMedicion.setMomentoYMinima(listaEstadisticas.stream().map(x->x.getMin()).toString());
+        infoMedicion.setMediaMensual(listaEstadisticas.stream().map(x->x.getAverage());
+*/
         return infoMedicion;
     }
 
