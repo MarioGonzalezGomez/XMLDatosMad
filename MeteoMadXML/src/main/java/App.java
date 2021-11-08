@@ -4,6 +4,7 @@ import controller.MeteoController;
 import controller.XMLController;
 //import io.HtmlWriter;
 import model.InformacionMedicion;
+import model.Medicion;
 import org.jdom2.JDOMException;
 import service.Utiles;
 
@@ -53,12 +54,14 @@ public class App {
 
 
         InformeController informe = InformeController.getInstance();
-        informe.generarXMLbbdd(ciudad, xmlTemperatura.getMedicionesPorCiudad(ciudad),xmlContaminacion.getMedicionesPorCiudad(ciudad) );
+
+        List<Medicion>listaTemperatura = xmlTemperatura.getMedicionesPorCiudad(ciudad);
+        List<Medicion>listaContaminacion = xmlContaminacion.getMedicionesPorCiudad(ciudad);
+        informe.generarXMLbbdd(ciudad,listaTemperatura,listaContaminacion);
 
         //long initTime = System.currentTimeMillis();
         //HtmlWriter htmlW = new HtmlWriter();
     }
 }
 //}
-
 
