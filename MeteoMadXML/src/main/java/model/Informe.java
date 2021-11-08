@@ -3,10 +3,12 @@ package model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.xml.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
-
+@XmlRootElement
+@XmlType(propOrder = {"uuid", "nombreCiudad" ,"fecha" })
 public class Informe {
     private String uuid;
     private String nombreCiudad;
@@ -15,7 +17,7 @@ public class Informe {
     private List<InformacionMedicion> informacionMeteorologica; //MeteoController.getEstatisticsMeteo
     private List<InformacionMedicion> informacionContaminacion;
 
-
+@XmlAnyAttribute
     public String getUuid() {
         return uuid;
     }
@@ -40,6 +42,8 @@ public class Informe {
         this.fecha = fecha;
     }
 
+    @XmlElementWrapper(name = "datos_meteorologicos")
+    @XmlElement
     public List<InformacionMedicion> getInformacionMeteorologica() {
         return informacionMeteorologica;
     }
@@ -48,6 +52,8 @@ public class Informe {
         this.informacionMeteorologica = informacionMeteorologica;
     }
 
+    @XmlElementWrapper(name = "datos_contaminacion")
+    @XmlElement
     public List<InformacionMedicion> getInformacionContaminacion() {
         return informacionContaminacion;
     }

@@ -40,7 +40,7 @@ public class InformeController {
 
 
     public void generarXMLbbdd(String ciudad, List<Medicion>temperaturas, List<Medicion>contaminacion) throws JAXBException {
-
+        String uri = System.getProperty("user.dir")+File.separator+"MeteoMadXML"+ File.separator+ "src"+File.separator+"main"+File.separator+"db"+File.separator+"mediciones.xml";
         MeteoController meteo = new MeteoController();
         meteo.filtrarMagnitudesTemperatura(temperaturas);
 
@@ -58,36 +58,58 @@ public class InformeController {
         informe.setInformacionContaminacion(contraminacion.getEstatisticsConta());
 
 
-        marshaller.marshal(informe,System.out); //cambiar a una ruta
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
+        marshaller.marshal(informe,new File(uri));
+
     }
 
     public static InformacionMedicion generarEstadisticas(List<Medicion> medicionesPorEstadistica) {
-        DoubleSummaryStatistics estadisticas;
         InformacionMedicion infoMedicion = new InformacionMedicion();
-        List<DoubleSummaryStatistics> listaEstadisticas = new ArrayList<>();
 
+        if(medicionesPorEstadistica.size()!=0) {
+            DoubleSummaryStatistics estadisticas;
+            List<DoubleSummaryStatistics> listaEstadisticas = new ArrayList<>();
+
+            for (Medicion med : medicionesPorEstadistica
+            ) {
+                estadisticas = med.getMedicionesHoras().stream()
+                        .filter(me -> me.getMedicion() != null)
+                        .collect(Collectors.summarizingDouble(MedicionHora::getMedicion));
+
+                listaEstadisticas.add(estadisticas);
+
+            }
+
+            Double maxMax = listaEstadisticas.stream().map(x -> x.getMax()).max(Double::compareTo).orElseThrow(NoSuchElementException::new);
+            Double minMin = listaEstadisticas.stream().map(x -> x.getMin()).min(Double::compareTo).orElseThrow(NoSuchElementException::new);
+            Double media = listaEstadisticas.stream().map(x -> x.getAverage()).mapToDouble(x -> x).average().getAsDouble();
+
+
+            infoMedicion.setMomentoYMaxima(new MedicionHora(maxMax));
+            infoMedicion.setMomentoYMinima(new MedicionHora(minMin));
+            infoMedicion.setMediaMensual(media);
+
+
+            return infoMedicion;
+        }else return infoMedicion;
+    }
+
+    public static void crearEstadisticas(List<Medicion> medicionesPorEstadistica) {
+
+
+        List<MedicionHora>medicionesHora = new ArrayList<>();
+      DoubleSummaryStatistics medicion;
         for (Medicion med : medicionesPorEstadistica
         ) {
-            estadisticas = med.getMedicionesHoras().stream()
-                    .filter(me -> me.getMedicion() != null)
-                    .collect(Collectors.summarizingDouble(MedicionHora::getMedicion));
 
-            listaEstadisticas.add(estadisticas);
 
         }
 
-        Double maxMax = listaEstadisticas.stream().map(x -> x.getMax()).max(Double::compareTo).orElseThrow(NoSuchElementException::new);
-        Double minMin = listaEstadisticas.stream().map(x -> x.getMin()).min(Double::compareTo).orElseThrow(NoSuchElementException::new);
-        Double media = listaEstadisticas.stream().map(x -> x.getAverage()).mapToDouble(x -> x).average().getAsDouble();
 
 
-        infoMedicion.setMomentoYMaxima(new MedicionHora(maxMax));
-        infoMedicion.setMomentoYMinima(new MedicionHora(minMin));
-        infoMedicion.setMediaMensual(media);
-
-
-        return infoMedicion;
     }
+
+
 
 
 }
