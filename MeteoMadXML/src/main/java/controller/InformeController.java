@@ -39,25 +39,18 @@ public class InformeController {
 
 
 
-    public void generarXMLbbdd(String ciudad, List<Medicion>temperaturas, List<Medicion>contaminacion) throws JAXBException {
-        String uri = System.getProperty("user.dir")+File.separator+"MeteoMadXML"+ File.separator+ "src"+File.separator+"main"+File.separator+"db"+File.separator+"mediciones.xml";
-        MeteoController meteo = new MeteoController();
-        meteo.filtrarMagnitudesTemperatura(temperaturas);
-
-        ContaminacionController contraminacion = new ContaminacionController();
-        contraminacion.filtrarMagnitudesContaminacion(contaminacion);
-
-        JAXBContext context = JAXBContext.newInstance(Informe.class);
-        marshaller = context.createMarshaller();
+    public void generarXMLbbdd(String ciudad, MeteoController meteo, ContaminacionController conta) throws JAXBException {
+        String uri = System.getProperty("user.dir")+File.separator+"MeteoMadXML"+ File.separator+ "src"+File.separator+"main"+File.separator+"java"+File.separator+"db"+File.separator+"mediciones.xml";
 
         Informe informe = new Informe();
         informe.setUuid(java.util.UUID.randomUUID().toString());
         informe.setNombreCiudad(ciudad);
         informe.setFecha("fechita");
         informe.setInformacionMeteorologica(meteo.getEstatisticsMeteo());
-        informe.setInformacionContaminacion(contraminacion.getEstatisticsConta());
+        informe.setInformacionContaminacion(conta.getEstatisticsConta());
 
-
+        JAXBContext context = JAXBContext.newInstance(Informe.class);
+        marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
         marshaller.marshal(informe,new File(uri));
 

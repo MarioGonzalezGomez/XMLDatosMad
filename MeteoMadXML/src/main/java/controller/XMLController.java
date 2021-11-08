@@ -52,8 +52,6 @@ public class XMLController {
 
         MapeoCiudadCodigo mcc = new MapeoCiudadCodigo();
 
-//============================METERLE UN FILTRO POR CIUDAD =============================//
-
         listaMediciones.stream().filter(x -> x.getChild("puntoMuestreo").getText().substring(0, 8).equals(mcc.mapearCiudadCodigo().get(ciudad))).forEach(medicionElement -> {
             Medicion medicion = new Medicion();
             medicion.setProvincia(medicionElement.getChildText("provincia"));

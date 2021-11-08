@@ -9,14 +9,19 @@ import java.util.stream.Collectors;
 public class MeteoController {
 
     MedicionesMeteo medicionesMeteo = new MedicionesMeteo();
+    List<Medicion>listaMeteo = new ArrayList<>();
+
+    public MeteoController(List<Medicion>listaMeteo ) {
+        this.listaMeteo=listaMeteo;
+
+    }
 
     /**
      * Este método filtra las mediciones por magnitud,sacamos entonces listas de magnitudes con todas sus mediciones para las estadisticas
      *
-     * @param listaMedicionesTemperatura
      */
-    public void filtrarMagnitudesTemperatura(List<Medicion> listaMedicionesTemperatura) {
-        for (Medicion medicion : listaMedicionesTemperatura
+    public void filtrarMagnitudesTemperatura() {
+        for (Medicion medicion : listaMeteo
         ) {
 
             switch (medicion.getMagnitud()) {
@@ -71,6 +76,7 @@ public class MeteoController {
 
     public List<InformacionMedicion> getEstatisticsMeteo() {
 
+        filtrarMagnitudesTemperatura();
         List<InformacionMedicion> listaEstadisticas = new ArrayList<>();
 
         listaEstadisticas.add(InformeController.generarEstadisticas(medicionesMeteo.getVelocidadViento()));

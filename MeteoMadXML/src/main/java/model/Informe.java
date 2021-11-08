@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @XmlRootElement
-@XmlType(propOrder = {"uuid", "nombreCiudad" ,"fecha" })
+@XmlType(propOrder = {"uuid", "nombreCiudad" ,"fecha","informacionMeteorologica","informacionContaminacion" })
 public class Informe {
     private String uuid;
     private String nombreCiudad;
@@ -17,7 +17,7 @@ public class Informe {
     private List<InformacionMedicion> informacionMeteorologica; //MeteoController.getEstatisticsMeteo
     private List<InformacionMedicion> informacionContaminacion;
 
-@XmlAnyAttribute
+@XmlAttribute
     public String getUuid() {
         return uuid;
     }

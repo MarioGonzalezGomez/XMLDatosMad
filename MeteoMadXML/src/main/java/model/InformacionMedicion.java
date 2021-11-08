@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement
-@XmlType(propOrder = {"mediaMensual", "momentoYMaxima", "momentoYMinima"})
+@XmlType(propOrder = {"nombreMedicion","mediaMensual", "momentoYMaxima", "momentoYMinima"})
 public class InformacionMedicion {
 
 
@@ -34,8 +34,7 @@ public class InformacionMedicion {
     public void setMediaMensual( Double mediaMensual) {
         this.mediaMensual = mediaMensual;
     }
-    @XmlElementWrapper(name = "max")
-    @XmlElement
+
     public MedicionHora getMomentoYMaxima() {
         return momentoYMaxima;
     }
@@ -43,8 +42,7 @@ public class InformacionMedicion {
     public void setMomentoYMaxima(MedicionHora momentoYMaxima) {
         this.momentoYMaxima = momentoYMaxima;
     }
-    @XmlElementWrapper(name = "min")
-    @XmlElement
+
     public MedicionHora getMomentoYMinima() {
         return momentoYMinima;
     }

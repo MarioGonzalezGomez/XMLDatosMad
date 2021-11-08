@@ -9,15 +9,21 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public class ContaminacionController {
+
+
+    List<Medicion>listaConta = new ArrayList<>();
     MedicionesContaminacion medicionesContaminacion = new MedicionesContaminacion();
+
+    public ContaminacionController(List<Medicion> listaConta) {
+        this.listaConta=listaConta;
+    }
 
     /**
      * Este método filtra las mediciones por magnitud,sacamos entonces listas de magnitudes con todas sus mediciones para las estadisticas
      *
-     * @param listaMedicionesContaminacion
      */
-    public void filtrarMagnitudesContaminacion(List<Medicion> listaMedicionesContaminacion) {
-        for (Medicion medicion : listaMedicionesContaminacion
+    public void filtrarMagnitudesContaminacion() {
+        for (Medicion medicion : listaConta
         ) {
 
             switch (medicion.getMagnitud()) {
@@ -109,7 +115,7 @@ public class ContaminacionController {
     //Hay que refactorizar este código para que reciba por parametro una lista genérica y le genere las estadisticas solo a esa lista.
     //Desde otra clase se podrá usar este método dentro de un bucle que genere las estadísticas de todas las listas
     public List<InformacionMedicion> getEstatisticsConta() {
-
+        filtrarMagnitudesContaminacion();
         List<InformacionMedicion> listaEstadisticas = new ArrayList<>();
 
         listaEstadisticas.add(InformeController.generarEstadisticas(medicionesContaminacion.getDioxidoAzufre()));

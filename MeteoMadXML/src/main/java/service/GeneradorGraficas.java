@@ -18,10 +18,12 @@ import java.nio.file.StandardOpenOption;
 import java.util.DoubleSummaryStatistics;
 import java.util.List;
 
+
 public class GeneradorGraficas {
 
 
-    /**
+
+/**
      * Utilizando la librería JFreeChart, esta clase implementa el código necesario para generar las gráficas de las
      * mediciones. Adicionalmente, utiliza condiciones con un index para poder hacer gráficos personalizados y
      * más adecuados para cada tipo de dato
@@ -59,7 +61,8 @@ public class GeneradorGraficas {
         return grafica;
     }
 
-    /**
+
+/**
      * Este método llama a la clase GeneradorGraficas para generar las imágenes que utilizaremos en el html. Estas se incorporan en el propio documento html
      * y derivan de los mismos datos que se expondrán en el informe.
      *
@@ -67,13 +70,14 @@ public class GeneradorGraficas {
      * @throws IOException
      */
 
+
     public void generarGraficas(List<DoubleSummaryStatistics> datos) throws IOException {
         try {
             Files.createDirectory(Paths.get(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "graficas"));
         } catch (FileAlreadyExistsException e) {
             System.out.println("Guardando en carpeta Gráficas");
         }
-        datos
+
         JFreeChart graficoTemp = hacerGrafica(datos, 2, "Temperatura");
         File graficoTemperatura = new File(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "graficas" + File.separator + "graficoTemp");
         ChartUtils.saveChartAsPNG(graficoTemperatura, graficoTemp, 600, 400);
@@ -92,4 +96,6 @@ public class GeneradorGraficas {
 
     }
 }
+
+
 

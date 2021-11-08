@@ -7,14 +7,13 @@ import lombok.NoArgsConstructor;
 import javax.xml.bind.annotation.XmlType;
 import java.sql.Time;
 
-@Data
-@NoArgsConstructor
+
 
 @XmlType(propOrder = {"medicion", "hora"})
 public class MedicionHora {
     private Double medicion;
     private String hora;
-    private String nulo;
+
 
     public MedicionHora(Double medicion, String hora) {
         this.medicion = medicion;
@@ -28,17 +27,19 @@ public class MedicionHora {
     }
 
 
-    @Override
-    public String toString() {
-        if (medicion != null) {
-            return
-                    "Medicion= " + medicion +
-                    ",  Hora= " + hora + '\'';
+    public Double getMedicion() {
+        return medicion;
+    }
 
-        } else {
-            return
-                    "Medicion= " + nulo;
+    public void setMedicion(Double medicion) {
+        this.medicion = medicion;
+    }
 
-        }
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
     }
 }
