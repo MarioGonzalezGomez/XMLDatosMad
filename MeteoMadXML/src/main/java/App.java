@@ -1,4 +1,5 @@
 import controller.CSVController;
+import controller.InformeController;
 import controller.MeteoController;
 import controller.XMLController;
 //import io.HtmlWriter;
@@ -46,13 +47,13 @@ public class App {
         XMLController xmlTemperatura = XMLController.getInstance(urlXMLTemperatura);
         xmlTemperatura.loadData();
 
-        MeteoController mc = new MeteoController();
-        mc.filtrarMagnitudesTemperatura(xmlTemperatura.getMedicionesPorCiudad(ciudad));
-        List<InformacionMedicion> infor = mc.getEstatisticsMeteo();
+        XMLController xmlContaminacion = XMLController.getInstance(urlXMLContaminacion);
+        xmlContaminacion.loadData();
 
 
-        XMLController XMLContaminacion = XMLController.getInstance(urlXMLContaminacion);
-        XMLContaminacion.loadData();
+
+        InformeController informe = InformeController.getInstance();
+        informe.generarXMLbbdd(ciudad, xmlTemperatura.getMedicionesPorCiudad(ciudad),xmlContaminacion.getMedicionesPorCiudad(ciudad) );
 
         //long initTime = System.currentTimeMillis();
         //HtmlWriter htmlW = new HtmlWriter();

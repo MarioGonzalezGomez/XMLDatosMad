@@ -1,11 +1,13 @@
 package model;
 
 public class InformacionMedicion {
+
+
     private String nombreMedicion;
     private Double mediaMensual;
     private MedicionHora momentoYMaxima;
     private MedicionHora momentoYMinima;
-    private Object grafica; ///cambiar a JFreeChart tanto aqui como en getters y setters
+    //private Object grafica; ///cambiar a JFreeChart tanto aqui como en getters y setters
 
 
 
@@ -42,11 +44,5 @@ public class InformacionMedicion {
         this.momentoYMinima = momentoYMinima;
     }
 
-    public Object getGrafica() {
-        return grafica;
-    }
 
-    public void setGrafica(Object grafica) {
-        this.grafica = grafica;
-    }
 }

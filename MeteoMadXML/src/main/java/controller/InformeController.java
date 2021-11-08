@@ -1,9 +1,14 @@
 package controller;
 
 import model.InformacionMedicion;
+import model.Informe;
 import model.Medicion;
 import model.MedicionHora;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.DoubleSummaryStatistics;
 import java.util.List;
@@ -12,19 +17,54 @@ import java.util.stream.Collectors;
 
 public class InformeController {
 
-    public void generarInforme() {
-        MeteoController meteoController = new MeteoController();
+    private static InformeController instance;
+    private Marshaller marshaller;
+    private Informe informe;
+
+    private InformeController() {
+    }
+
+    /**
+     * Devuelve la instancia del controlador
+     *
+     * @return
+     */
+    public static InformeController getInstance() {
+        if (instance == null) {
+            instance = new InformeController();
+        }
+        return instance;
+    }
 
 
 
 
+    public void generarXMLbbdd(String ciudad, List<Medicion>temperaturas, List<Medicion>contaminacion) throws JAXBException {
+
+        MeteoController meteo = new MeteoController();
+        meteo.filtrarMagnitudesTemperatura(temperaturas);
+
+        ContaminacionController contraminacion = new ContaminacionController();
+        contraminacion.filtrarMagnitudesContaminacion(contaminacion);
+
+        JAXBContext context = JAXBContext.newInstance(Informe.class);
+        marshaller = context.createMarshaller();
+
+        Informe informe = new Informe();
+        informe.setUuid(java.util.UUID.randomUUID().toString());
+        informe.setNombreCiudad(ciudad);
+        informe.setFecha("fechita");
+        informe.setInformacionMeteorologica(meteo.getEstatisticsMeteo());
+        informe.setInformacionContaminacion(contraminacion.getEstatisticsConta());
+
+
+        marshaller.marshal(informe,System.out); //cambiar a una ruta
     }
 
     public static InformacionMedicion generarEstadisticas(List<Medicion> medicionesPorEstadistica) {
         DoubleSummaryStatistics estadisticas;
         InformacionMedicion infoMedicion = new InformacionMedicion();
         List<DoubleSummaryStatistics> listaEstadisticas = new ArrayList<>();
-        //PROBLEMA : en estadisticas solo se introducen 24, las de 1 dia. Necesito las 24 de los 27 dias.
 
         for (Medicion med : medicionesPorEstadistica
         ) {
@@ -45,12 +85,12 @@ public class InformeController {
         infoMedicion.setMomentoYMinima(new MedicionHora(minMin));
         infoMedicion.setMediaMensual(media);
 
+
         return infoMedicion;
     }
 
 
-
-    }
+}
 
 
 
