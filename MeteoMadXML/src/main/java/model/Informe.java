@@ -12,7 +12,6 @@ public class Informe {
     private String nombreCiudad;
     private LocalDate fechaInicioMedicion;
     private LocalDate fechaFinMedicion;
-    private String estacionesAsociadas;
     private List<InformacionMedicion> informacionMeteorologica;
     private List<InformacionMedicion> informacionContaminacion;
 
@@ -22,7 +21,6 @@ public class Informe {
                 "nombreCiudad='" + nombreCiudad + '\'' +
                 ", fechaInicioMedicion=" + fechaInicioMedicion +
                 ", fechaFinMedicion=" + fechaFinMedicion +
-                ", estacionesAsociadas='" + estacionesAsociadas + '\'' +
                 ", informacionMeteorologica=" + informacionMeteorologica +
                 ", informacionContaminacion=" + informacionContaminacion +
                 '}';

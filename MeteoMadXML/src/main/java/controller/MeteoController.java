@@ -12,6 +12,7 @@ public class MeteoController {
 
     /**
      * Este método filtra las mediciones por magnitud,sacamos entonces listas de magnitudes con todas sus mediciones para las estadisticas
+     *
      * @param listaMedicionesTemperatura
      */
     public void filtrarMagnitudesTemperatura(List<Medicion> listaMedicionesTemperatura) {
@@ -67,90 +68,28 @@ public class MeteoController {
         }
     }
 
-    /**
-     * Calcula las estadisticas de cada lista de magnitudes
-     * @param medicionesPorEstadistica
-     * @return
-     */
 
 
-    public InformacionMedicion generarEstadisticas(List<Medicion>medicionesPorEstadistica) {
+    public List<InformacionMedicion> getEstatisticsMeteo() {
 
-        DoubleSummaryStatistics estadisticas;
-        InformacionMedicion infoMedicion = new InformacionMedicion();
-        List<DoubleSummaryStatistics>listaEstadisticas = new ArrayList<>();
-        //PROBLEMA : en estadisticas solo se introducen 24, las de 1 dia. Necesito las 24 de los 27 dias.
+        List<InformacionMedicion> listaEstadisticas = new ArrayList<>();
 
-        for (Medicion med : medicionesPorEstadistica
-        ) {
-            estadisticas = med.getMedicionesHoras().stream()
-                    .filter(me -> me.getMedicion() != null)
-                    .collect(Collectors.summarizingDouble(MedicionHora::getMedicion));
-
-            listaEstadisticas.add(estadisticas);
-
-        }
-
-        Double maxMax = listaEstadisticas.stream().map(x->x.getMax()).max(Double::compareTo).orElseThrow(NoSuchElementException::new);
-        Double minMin= listaEstadisticas.stream().map(x->x.getMin()).min(Double::compareTo).orElseThrow(NoSuchElementException::new);
-        Double media = listaEstadisticas.stream().map(x->x.getAverage()).mapToDouble(x->x).average().getAsDouble();
-
-
-        infoMedicion.setMomentoYMaxima(new MedicionHora(maxMax));
-        infoMedicion.setMomentoYMinima(new MedicionHora(minMin));
-        infoMedicion.setMediaMensual(media);
-
-        return infoMedicion;
-    }
-
-
-    public List<InformacionMedicion>getEstatisticsMeteo(){
-
-        List<InformacionMedicion>listaEstadisticas = new ArrayList<>();
-
-        listaEstadisticas.add(generarEstadisticas(medicionesMeteo.getVelocidadViento()));
-        listaEstadisticas.add(generarEstadisticas(medicionesMeteo.getDireccionViento()));
-        listaEstadisticas.add(generarEstadisticas(medicionesMeteo.getTemperatura()));
-        listaEstadisticas.add(generarEstadisticas(medicionesMeteo.getHumedadRelativa()));
-        listaEstadisticas.add(generarEstadisticas(medicionesMeteo.getPresionAtmosferica()));
-        listaEstadisticas.add(generarEstadisticas(medicionesMeteo.getRadiacionSolar()));
-        listaEstadisticas.add(generarEstadisticas(medicionesMeteo.getPrecipitacion()));
+        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesMeteo.getVelocidadViento()));
+        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesMeteo.getDireccionViento()));
+        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesMeteo.getTemperatura()));
+        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesMeteo.getHumedadRelativa()));
+        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesMeteo.getPresionAtmosferica()));
+        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesMeteo.getRadiacionSolar()));
+        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesMeteo.getPrecipitacion()));
 
         return listaEstadisticas;
 
 
-
-
     }
 
-    }
+}
 
 
 
 
-
-
-
-
-
-    /*public DoubleSummaryStatistics procesarDatos(List<Medicion> mediciones) {
-
-         mediciones.stream()
-                .map(Medicion::getMedicionesHoras)
-                .forEach(this::mapear);
-
-
-         return estadisticas;
-
-    }
-
-    public DoubleSummaryStatistics mapear(List<MedicionHora> mh) {
-
-        this.estadisticas= new DoubleSummaryStatistics();
-        DoubleSummaryStatistics dss = mh.stream()
-                .filter(Objects::nonNull)
-                .collect(Collectors.summarizingDouble(MedicionHora::getMedicion));
-        this.estadisticas.combine(dss);
-        return dss;
-    }*/
 

@@ -20,7 +20,7 @@ public class InformeXmlReader {
     public Document leerInforme() throws IOException, JDOMException {
         SAXBuilder builder = new SAXBuilder();
         Document d = builder.build(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator
-                + "resources" + File.separator + "informes" + File.separator + "mediciones.xml");
+                 + File.separator + "db" + File.separator + "mediciones.xml");
         return d;
     }
 }
