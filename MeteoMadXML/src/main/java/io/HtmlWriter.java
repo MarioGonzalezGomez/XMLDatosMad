@@ -1,4 +1,5 @@
 package io;
+/*
 
 import model.Medicion;
 import org.jfree.chart.ChartUtils;
@@ -19,7 +20,8 @@ import java.util.List;
 
 public class HtmlWriter {
 
-    /**
+    */
+/**
      * Este método utiliza la dirección introducida por el usuario para escribir en ella el documento html con el informe completo.
      * Utiliza los datos ya mapeados en objetos Medicion, en dos listas: temperatura y contaminacion. Internamnete llama al método procesarHtml
      *
@@ -28,7 +30,8 @@ public class HtmlWriter {
      * @param initTime
      * @param ruta
      * @throws IOException
-     */
+     *//*
+
     public void generarHtml(List<Medicion> temperatura, List<Medicion> contaminacion, long initTime, Path ruta) throws IOException {
         List<String> texto = procesarHtml(temperatura, contaminacion, initTime);
         String nombreDoc = texto.get(0).toLowerCase() + ".html";
@@ -39,7 +42,8 @@ public class HtmlWriter {
 
     }
 
-    /**
+    */
+/**
      * Este método recibe los objetos con los datos ya procesados de medias y estadísticas para almacenarlos en una lista de String
      * incorporando en ellas las etiquetas html necesarias para su correcta visualización en el navegador.
      *
@@ -47,7 +51,8 @@ public class HtmlWriter {
      * @param contaminacion
      * @param initTime
      * @return
-     */
+     *//*
+
     private List<String> procesarHtml(List<Medicion> temperatura, List<Medicion> contaminacion, long initTime) {
         //Probablemente se reciba una lista de objetos informe o similar, y se hará el recorrido dependiendo del número de informees
         LocalDate ld = LocalDate.now();
@@ -75,13 +80,15 @@ public class HtmlWriter {
         return texto;
     }
 
-    /**
+    */
+/**
      * Este método llama a la clase GeneradorGraficas para generar las imágenes que utilizaremos en el html. Estas se incorporan en el propio documento html
      * y derivan de los mismos datos que se expondrán en el informe.
      *
      * @param datos
      * @throws IOException
-     */
+     *//*
+
     private void generarGraficas(List<Medicion> datos) throws IOException {
         GeneradorGraficas gg = new GeneradorGraficas();
 
@@ -103,3 +110,6 @@ public class HtmlWriter {
 
     }
 }
+
+*/
+

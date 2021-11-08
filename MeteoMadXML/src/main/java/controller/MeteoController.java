@@ -77,12 +77,14 @@ public class MeteoController {
         DoubleSummaryStatistics estadisticas = new DoubleSummaryStatistics();
         InformacionMedicion infoMedicion = new InformacionMedicion();
 
+        //PROBLEMA : en estadisticas solo se introducen 24, las de 1 dia. Necesito las 24 de los 27 dias.
 
         for (Medicion med : medicionesPorEstadistica
         ) {
             estadisticas = med.getMedicionesHoras().stream()
-                            .filter(Objects::nonNull)
+                    .filter(me -> me.getMedicion() != null)
                     .collect(Collectors.summarizingDouble(MedicionHora::getMedicion));
+
 
         }
 
