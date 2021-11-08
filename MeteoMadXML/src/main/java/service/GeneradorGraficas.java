@@ -81,7 +81,7 @@ public class GeneradorGraficas {
         List<DoubleStream> prueba = new LinkedList<>();
 
 
-        mm.getTemperatura().stream().map(x -> x.getMedicionesHoras()).forEach(medicionHoras -> {
+        mm.getTemperatura().stream().map(Medicion::getMedicionesHoras).forEach(medicionHoras -> {
             mediasDiariasTemp.add(medicionHoras.stream().map(y -> y.getMedicion()).mapToDouble(y -> y).average().getAsDouble());
         });
 
