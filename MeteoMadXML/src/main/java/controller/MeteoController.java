@@ -1,15 +1,16 @@
 package controller;
 
+import lombok.Data;
 import model.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+@Data
 public class MeteoController {
 
-    MedicionesMeteo medicionesMeteo = new MedicionesMeteo();
-    List<Medicion>listaMeteo = new ArrayList<>();
+    private MedicionesMeteo medicionesMeteo = new MedicionesMeteo();
+    private List<Medicion>listaMeteo = new ArrayList<>();
 
     public MeteoController(List<Medicion>listaMeteo ) {
         this.listaMeteo=listaMeteo;
