@@ -3,8 +3,8 @@ package model;
 public class InformacionMedicion {
     private String nombreMedicion;
     private Double mediaMensual;
-    private String momentoYMaxima;
-    private String momentoYMinima;
+    private MedicionHora momentoYMaxima;
+    private MedicionHora momentoYMinima;
     private Object grafica; ///cambiar a JFreeChart tanto aqui como en getters y setters
 
 
@@ -22,23 +22,23 @@ public class InformacionMedicion {
         return mediaMensual;
     }
 
-    public void setMediaMensual(Double mediaMensual) {
+    public void setMediaMensual( Double mediaMensual) {
         this.mediaMensual = mediaMensual;
     }
 
-    public String getMomentoYMaxima() {
+    public MedicionHora getMomentoYMaxima() {
         return momentoYMaxima;
     }
 
-    public void setMomentoYMaxima(String momentoYMaxima) {
+    public void setMomentoYMaxima(MedicionHora momentoYMaxima) {
         this.momentoYMaxima = momentoYMaxima;
     }
 
-    public String getMomentoYMinima() {
+    public MedicionHora getMomentoYMinima() {
         return momentoYMinima;
     }
 
-    public void setMomentoYMinima(String momentoYMinima) {
+    public void setMomentoYMinima(MedicionHora momentoYMinima) {
         this.momentoYMinima = momentoYMinima;
     }
 

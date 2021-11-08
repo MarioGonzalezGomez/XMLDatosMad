@@ -18,8 +18,8 @@ public class MedicionHora {
         this.hora = hora;
 
     }
-    public MedicionHora(String nulo){
-        this.nulo=nulo;
+    public MedicionHora(Double medicion){
+        this.medicion=medicion;
 
 
     }

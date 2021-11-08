@@ -76,7 +76,7 @@ public class MeteoController {
 
     public InformacionMedicion generarEstadisticas(List<Medicion>medicionesPorEstadistica) {
 
-        DoubleSummaryStatistics estadisticas = new DoubleSummaryStatistics();
+        DoubleSummaryStatistics estadisticas;
         InformacionMedicion infoMedicion = new InformacionMedicion();
         List<DoubleSummaryStatistics>listaEstadisticas = new ArrayList<>();
         //PROBLEMA : en estadisticas solo se introducen 24, las de 1 dia. Necesito las 24 de los 27 dias.
@@ -90,17 +90,21 @@ public class MeteoController {
             listaEstadisticas.add(estadisticas);
 
         }
-        /*
-        infoMedicion.setMomentoYMaxima(listaEstadisticas.stream().map(x->x.getMax()));
-        infoMedicion.setMomentoYMinima(listaEstadisticas.stream().map(x->x.getMin()).toString());
-        infoMedicion.setMediaMensual(listaEstadisticas.stream().map(x->x.getAverage());
-*/
+
+        Double maxMax = listaEstadisticas.stream().map(x->x.getMax()).max(Double::compareTo).orElseThrow(NoSuchElementException::new);
+        Double minMin= listaEstadisticas.stream().map(x->x.getMin()).min(Double::compareTo).orElseThrow(NoSuchElementException::new);
+        Double media = listaEstadisticas.stream().map(x->x.getAverage()).mapToDouble(x->x).average().getAsDouble();
+
+
+        infoMedicion.setMomentoYMaxima(new MedicionHora(maxMax));
+        infoMedicion.setMomentoYMinima(new MedicionHora(minMin));
+        infoMedicion.setMediaMensual(media);
+
         return infoMedicion;
     }
 
 
     public List<InformacionMedicion>getEstatisticsMeteo(){
-
 
         List<InformacionMedicion>listaEstadisticas = new ArrayList<>();
 
