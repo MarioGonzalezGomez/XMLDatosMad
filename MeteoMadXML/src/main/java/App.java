@@ -4,6 +4,7 @@ import io.HtmlWriter;
 import model.InformacionMedicion;
 import model.Medicion;
 import org.jdom2.JDOMException;
+import service.GeneradorGraficas;
 import service.Utiles;
 
 import javax.xml.bind.JAXBException;
@@ -24,11 +25,11 @@ public class App {
             String ciudad = Utiles.normalizar(args[0]);
             Path ruta = Paths.get(args[1]);*/
 
-        String uriResources =  System.getProperty("user.dir") + File.separator + "MeteoMadXML" + File.separator + "src" + File.separator + "main" + File.separator + "resources";
-        String CSV_meteo =uriResources+ File.separator + "calidad_aire_datos_meteo_mes.csv";
-        String CSV_contaminacion = uriResources+ File.separator + "calidad_aire_datos_mes.csv";
-        String OUTPUT_temperatura = uriResources+ File.separator + "Temperatura.xml";
-        String OUTPUT_contaminacion = uriResources+ File.separator + "Contaminacion.xml";
+        String uriResources = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources";
+        String CSV_meteo = uriResources + File.separator + "calidad_aire_datos_meteo_mes.csv";
+        String CSV_contaminacion = uriResources + File.separator + "calidad_aire_datos_mes.csv";
+        String OUTPUT_temperatura = uriResources + File.separator + "Temperatura.xml";
+        String OUTPUT_contaminacion = uriResources + File.separator + "Contaminacion.xml";
 
 
         //Luego lo adaptamos para que se pida mediante args. Pero por ahora lo pongo como un string de entrada a los lectores
@@ -44,7 +45,6 @@ public class App {
         CSVTemperatura.writeXMLFile(OUTPUT_temperatura);
 
 
-
         XMLController xmlTemperatura = XMLController.getInstance(OUTPUT_temperatura);
         xmlTemperatura.loadData();
 
@@ -54,18 +54,19 @@ public class App {
         //Meter esto en sus service
 
 
-
-
         MeteoController meteo = new MeteoController(xmlTemperatura.getMedicionesPorCiudad(ciudad));
         ContaminacionController conta = new ContaminacionController(xmlContaminacion.getMedicionesPorCiudad(ciudad));
+        meteo.getEstatisticsMeteo();
         long initTime = System.currentTimeMillis();
-        //HtmlWriter htmlW = new HtmlWriter();
-        //htmlW.generarHtml(meteo.getEstatisticsMeteo(),conta.getEstatisticsConta(), initTime, ciudad, path);
+        GeneradorGraficas gg = new GeneradorGraficas();
+        gg.generarGraficas(meteo.getMedicionesMeteo());
+        HtmlWriter htmlW = new HtmlWriter();
+        htmlW.generarHtml(meteo.getEstatisticsMeteo(), conta.getEstatisticsConta(), initTime, ciudad, path);
 
 
         InformeController informe = InformeController.getInstance();
         informe.generarXMLbbdd(ciudad, meteo, conta);
-        }
+    }
 }
 
 
