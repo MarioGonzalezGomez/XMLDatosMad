@@ -3,6 +3,7 @@ import controller.InformeController;
 import controller.MeteoController;
 import controller.XMLController;
 //import io.HtmlWriter;
+import io.HtmlWriter;
 import model.InformacionMedicion;
 import model.Medicion;
 import org.jdom2.JDOMException;
@@ -11,6 +12,8 @@ import service.Utiles;
 import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class App {
@@ -32,6 +35,7 @@ public class App {
 
         //Luego lo adaptamos para que se pida mediante args. Pero por ahora lo pongo como un string de entrada a los lectores
         String ciudad = Utiles.normalizar("Móstoles");
+        Path path = Paths.get("C:\\Users\\Mario\\Desktop\\AccesoDatos");
 
 
         CSVController CSVContaminacion = CSVController.getInstance(urlCSVContaminacion);
@@ -52,15 +56,15 @@ public class App {
         xmlContaminacion.loadData();
 
 
-
         InformeController informe = InformeController.getInstance();
 
-        List<Medicion>listaTemperatura = xmlTemperatura.getMedicionesPorCiudad(ciudad);
-        List<Medicion>listaContaminacion = xmlContaminacion.getMedicionesPorCiudad(ciudad);
-        informe.generarXMLbbdd(ciudad,listaTemperatura,listaContaminacion);
+        List<Medicion> listaTemperatura = xmlTemperatura.getMedicionesPorCiudad(ciudad);
+        List<Medicion> listaContaminacion = xmlContaminacion.getMedicionesPorCiudad(ciudad);
+        informe.generarXMLbbdd(ciudad, listaTemperatura, listaContaminacion);
 
-        //long initTime = System.currentTimeMillis();
-        //HtmlWriter htmlW = new HtmlWriter();
+        long initTime = System.currentTimeMillis();
+        HtmlWriter htmlW = new HtmlWriter();
+        htmlW.generarHtml(listaTemperatura, listaContaminacion, initTime, ciudad, path);
     }
 }
 //}

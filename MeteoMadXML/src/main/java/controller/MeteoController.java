@@ -69,7 +69,6 @@ public class MeteoController {
     }
 
 
-
     public List<InformacionMedicion> getEstatisticsMeteo() {
 
         List<InformacionMedicion> listaEstadisticas = new ArrayList<>();
