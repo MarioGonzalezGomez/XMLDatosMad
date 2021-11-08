@@ -29,13 +29,13 @@ public class MarkdownWriter {
     /**
      * Un escritor que genera un archivo markdown en resources con los datos aportados en una List<String>
      */
-    public void generarMarkdown() throws IOException, XPathExpressionException, ParserConfigurationException, SAXException, JDOMException {
+    public void generarMarkdown() throws IOException, XPathExpressionException, JDOMException {
         List<String> texto = procesarMarkdown();
         nombreDoc = "informe";
         nombreCiudades.forEach(x -> nombreDoc = nombreDoc + "-" + x);
         Path path = Paths.get(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator
                 + "resources" + File.separator + "informes" + File.separator + nombreDoc + ".md");
-        Files.write(path, texto, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        Files.write(path, texto, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 
     }
 
