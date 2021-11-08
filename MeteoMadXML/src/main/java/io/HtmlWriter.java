@@ -1,3 +1,4 @@
+/*
 package io;
 
 
@@ -28,6 +29,7 @@ public class HtmlWriter {
 
 
 
+*/
 /**
      * Este método utiliza la dirección introducida por el usuario para escribir en ella el documento html con el informe completo.
      * Utiliza los datos ya mapeados en objetos Medicion, en dos listas: temperatura y contaminacion. Internamnete llama al método procesarHtml
@@ -37,7 +39,8 @@ public class HtmlWriter {
      * @param initTime
      * @param ruta
      * @throws IOException
-     */
+     *//*
+
 
     public void generarHtml(List<InformacionMedicion> medicionesTemp, List<InformacionMedicion> medicionesCont, long initTime, String ciudad, Path ruta) throws IOException {
         //Con esta líneas iniciales nos aseguramos de que la ciudad esté bien escrita en el informe
@@ -57,6 +60,7 @@ public class HtmlWriter {
 
 
 
+*/
 /**
      * Este método recibe los objetos con los datos ya procesados de medias y estadísticas para almacenarlos en una lista de String
      * incorporando en ellas las etiquetas html necesarias para su correcta visualización en el navegador.
@@ -64,7 +68,8 @@ public class HtmlWriter {
      * @param medicionesTemp
      * @param initTime
      * @return
-     */
+     *//*
+
 
 
     private List<String> procesarHtml(List<InformacionMedicion> medicionesTemp, List<InformacionMedicion> medicionesCont, long initTime, String ciudad) {
@@ -110,3 +115,4 @@ public class HtmlWriter {
 
 
 
+*/

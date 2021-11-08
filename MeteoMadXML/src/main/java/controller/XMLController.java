@@ -46,6 +46,7 @@ public class XMLController {
 
     //Se le pasa una <medicion> y se mapean sus hijos
     public List<Medicion> getMedicionesPorCiudad(String ciudad) {
+        System.out.println("Se van a mapear los XML");
         Element root = this.data.getRootElement();
         List<Element> listaMediciones = root.getChildren("medicion");
         List<Medicion> medicionesLista = new ArrayList<>();
@@ -79,6 +80,8 @@ public class XMLController {
                     medicion.getMedicionesHoras().add(medicionHora);
                 }
 
+
+                System.out.println(medicion.toString());
             }
 
 

@@ -1,3 +1,4 @@
+
 package service;
 
 
@@ -19,7 +20,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.DoubleSummaryStatistics;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.DoubleStream;
 
 
@@ -31,7 +31,8 @@ public class GeneradorGraficas {
     private List<Double> mediasDiariasSolar = new LinkedList<>();
 
 
-    /**
+
+/**
      * Utilizando la librería JFreeChart, esta clase implementa el código necesario para generar las gráficas de las
      * mediciones. Adicionalmente, utiliza condiciones con un index para poder hacer gráficos personalizados y
      * más adecuados para cada tipo de dato
@@ -41,6 +42,7 @@ public class GeneradorGraficas {
      * @param nombreTabla
      * @return
      */
+
 
     private JFreeChart hacerGrafica(List<Double> diarias, int index, String nombreTabla) {
         JFreeChart grafica = null;
@@ -69,12 +71,15 @@ public class GeneradorGraficas {
     }
 
 
-    /**
-     * Este método genera las imágenes que utilizaremos en el html. Estas se incorporan en el propio documento html
+
+/**
+     * Este método llama a la clase GeneradorGraficas para generar las imágenes que utilizaremos en el html. Estas se incorporan en el propio documento html
      * y derivan de los mismos datos que se expondrán en el informe.
      *
+     * @param mm
      * @throws IOException
      */
+
 
 
     public void generarGraficas(MedicionesMeteo mm) throws IOException {
@@ -125,6 +130,7 @@ public class GeneradorGraficas {
 
     }
 }
+
 
 
 

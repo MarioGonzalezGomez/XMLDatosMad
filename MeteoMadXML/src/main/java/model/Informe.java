@@ -14,7 +14,7 @@ public class Informe {
     private String nombreCiudad;
     private String fecha;
 
-    private List<InformacionMedicion> informacionMeteorologica; //MeteoController.getEstatisticsMeteo
+    private List<InformacionMedicion> informacionMeteorologica;
     private List<InformacionMedicion> informacionContaminacion;
 
 @XmlAttribute

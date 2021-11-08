@@ -27,6 +27,9 @@ public class MedicionHora {
     }
 
 
+
+
+
     public Double getMedicion() {
         return medicion;
     }
