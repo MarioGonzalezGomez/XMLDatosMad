@@ -1,4 +1,4 @@
-package controller;
+package service;
 
 import lombok.Data;
 import model.*;
@@ -7,12 +7,12 @@ import java.util.*;
 
 
 @Data
-public class MeteoController {
+public class MeteoService {
 
     private MedicionesMeteo medicionesMeteo = new MedicionesMeteo();
     private List<Medicion>listaMeteo = new ArrayList<>();
 
-    public MeteoController(List<Medicion>listaMeteo ) {
+    public MeteoService(List<Medicion>listaMeteo ) {
         this.listaMeteo=listaMeteo;
 
     }
@@ -74,19 +74,22 @@ public class MeteoController {
         }
     }
 
-
+    /**
+     * Introduce en una sola lista las estadísticas filtradas por magnitud. Por cada magnitud las medias, maximas y minimas de todo el mes.
+     * @return
+     */
     public List<InformacionMedicion> getEstatisticsMeteo() {
 
         filtrarMagnitudesTemperatura();
         List<InformacionMedicion> listaEstadisticas = new ArrayList<>();
 
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesMeteo.getVelocidadViento()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesMeteo.getDireccionViento()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesMeteo.getTemperatura()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesMeteo.getHumedadRelativa()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesMeteo.getPresionAtmosferica()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesMeteo.getRadiacionSolar()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesMeteo.getPrecipitacion()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesMeteo.getVelocidadViento()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesMeteo.getDireccionViento()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesMeteo.getTemperatura()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesMeteo.getHumedadRelativa()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesMeteo.getPresionAtmosferica()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesMeteo.getRadiacionSolar()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesMeteo.getPrecipitacion()));
 
         return listaEstadisticas;
 

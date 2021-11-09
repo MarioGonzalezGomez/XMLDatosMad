@@ -1,4 +1,4 @@
-package controller;
+package service;
 
 import model.InformacionMedicion;
 import model.Medicion;
@@ -7,13 +7,13 @@ import model.MedicionesContaminacion;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContaminacionController {
+public class ContaminacionService {
 
 
     List<Medicion>listaConta;
     MedicionesContaminacion medicionesContaminacion = new MedicionesContaminacion();
 
-    public ContaminacionController(List<Medicion> listaConta) {
+    public ContaminacionService(List<Medicion> listaConta) {
         this.listaConta=listaConta;
     }
 
@@ -114,20 +114,20 @@ public class ContaminacionController {
         filtrarMagnitudesContaminacion();
         List<InformacionMedicion> listaEstadisticas = new ArrayList<>();
 
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesContaminacion.getDioxidoAzufre()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesContaminacion.getMonoxidoCarbono()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesContaminacion.getMonoxidoNitrogeno()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesContaminacion.getDioxidoNitrogeno()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesContaminacion.getParticulas2_5()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesContaminacion.getParticulas10()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesContaminacion.getOxidosNitrogeno()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesContaminacion.getOzono()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesContaminacion.getTolueno()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesContaminacion.getBlackCarbon()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesContaminacion.getBenceno()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesContaminacion.getHicrocarburosTotales()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesContaminacion.getHidrocarburosNoMetanicos()));
-        listaEstadisticas.add(InformeController.generarEstadisticas(medicionesContaminacion.getMetaParaXileno()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesContaminacion.getDioxidoAzufre()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesContaminacion.getMonoxidoCarbono()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesContaminacion.getMonoxidoNitrogeno()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesContaminacion.getDioxidoNitrogeno()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesContaminacion.getParticulas2_5()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesContaminacion.getParticulas10()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesContaminacion.getOxidosNitrogeno()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesContaminacion.getOzono()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesContaminacion.getTolueno()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesContaminacion.getBlackCarbon()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesContaminacion.getBenceno()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesContaminacion.getHicrocarburosTotales()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesContaminacion.getHidrocarburosNoMetanicos()));
+        listaEstadisticas.add(InformeService.generarEstadisticas(medicionesContaminacion.getMetaParaXileno()));
 
         return listaEstadisticas;
 

@@ -1,4 +1,4 @@
-package controller;
+package service;
 
 import model.*;
 import org.jdom2.Document;
@@ -13,15 +13,19 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-public class InformeController {
+/**
+ * Esta clase trabaja con la generacion del informe que se escribirá en una base de datos en formato xml.
+ */
+public class InformeService {
 
-    private static InformeController instance;
+    private static InformeService instance;
     private Marshaller marshaller;
     private Informe informe;
     private String uri = System.getProperty("user.dir") + File.separator + "MeteoMadXML" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + "db" + File.separator + "mediciones.xml";
     private final File file = new File(uri);
     private Document doc;
-    private InformeController() {
+
+    private InformeService() {
     }
 
     /**
@@ -29,17 +33,23 @@ public class InformeController {
      *
      * @return
      */
-    public static InformeController getInstance() {
+    public static InformeService getInstance() {
         if (instance == null) {
-            instance = new InformeController();
+            instance = new InformeService();
         }
         return instance;
     }
 
 
-
-
-    public void generarXMLbbdd(String ciudad, MeteoController meteo, ContaminacionController conta) throws JAXBException {
+    /**
+     * Genera la base de datos en formato xml, añadiendole los datos ya procesados.
+     *
+     * @param ciudad
+     * @param meteo
+     * @param conta
+     * @throws JAXBException
+     */
+    public void generarXMLbbdd(String ciudad, MeteoService meteo, ContaminacionService conta) throws JAXBException {
 
         System.out.println("Se están cargando los datos en la base de datos mediciones.xml");
         Informe informe = new Informe();
@@ -59,6 +69,12 @@ public class InformeController {
 
     }
 
+    /**
+     * Genera las estadisticas de las listas de mediciones que se le pasen por parametro.
+     *
+     * @param medicionesPorEstadistica
+     * @return
+     */
     public static InformacionMedicion generarEstadisticas(List<Medicion> medicionesPorEstadistica) {
         InformacionMedicion infoMedicion = new InformacionMedicion();
 
@@ -74,7 +90,7 @@ public class InformeController {
                         .collect(Collectors.summarizingDouble(MedicionHora::getMedicion));
 
                 listaEstadisticas.add(estadisticas);
-                nombre=med.getNombreMedicion();
+                nombre = med.getNombreMedicion();
 
             }
 
@@ -95,7 +111,6 @@ public class InformeController {
 
         return infoMedicion;
     }
-
 
 }
 

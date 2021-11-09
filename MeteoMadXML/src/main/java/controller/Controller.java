@@ -3,7 +3,7 @@ package controller;
 import io.HtmlWriter;
 import io.MarkdownWriter;
 import org.jdom2.JDOMException;
-import service.GeneradorGraficas;
+import service.*;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.xpath.XPathExpressionException;
@@ -11,9 +11,20 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
+/**
+ * Clase que hace las llamadas necesarias para el correcto funcionamiento del programa.
+ */
 public class Controller {
 
-
+    /**
+     * Este método genera los controladores que van a tratar con los datos tanto csv,como xml, tambien delega la generacion tanto de
+     * graficas como de html como de bbdd.
+     * @param ciudad
+     * @param path
+     * @throws IOException
+     * @throws JDOMException
+     * @throws JAXBException
+     */
     public Controller(String ciudad, Path path) throws IOException, JDOMException, JAXBException, XPathExpressionException {
 
         String uriResources =  System.getProperty("user.dir") + File.separator + "MeteoMadXML" + File.separator + "src" + File.separator + "main" + File.separator + "resources";
@@ -23,24 +34,24 @@ public class Controller {
         String OUTPUT_contaminacion = uriResources+ File.separator + "Contaminacion.xml";
 
 
-        CSVController CSVContaminacion = CSVController.getInstance(CSV_contaminacion);
+        CSVService CSVContaminacion = CSVService.getInstance(CSV_contaminacion);
         CSVContaminacion.convertCSVtoXML();
         CSVContaminacion.writeXMLFile(OUTPUT_contaminacion);
-        CSVController CSVTemperatura = CSVController.getInstance(CSV_meteo);
+        CSVService CSVTemperatura = CSVService.getInstance(CSV_meteo);
         CSVTemperatura.convertCSVtoXML();
         CSVTemperatura.writeXMLFile(OUTPUT_temperatura);
 
 
 
-        XMLController xmlTemperatura = XMLController.getInstance(OUTPUT_temperatura);
+        XMLService xmlTemperatura = XMLService.getInstance(OUTPUT_temperatura);
         xmlTemperatura.loadData();
 
-        XMLController xmlContaminacion = XMLController.getInstance(OUTPUT_contaminacion);
+        XMLService xmlContaminacion = XMLService.getInstance(OUTPUT_contaminacion);
         xmlContaminacion.loadData();
 
 
-        MeteoController meteo = new MeteoController(xmlTemperatura.getMedicionesPorCiudad(ciudad));
-        ContaminacionController conta = new ContaminacionController(xmlContaminacion.getMedicionesPorCiudad(ciudad));
+        MeteoService meteo = new MeteoService(xmlTemperatura.getMedicionesPorCiudad(ciudad));
+        ContaminacionService conta = new ContaminacionService(xmlContaminacion.getMedicionesPorCiudad(ciudad));
         long initTime = System.currentTimeMillis();
 
         GeneradorGraficas gg = new GeneradorGraficas();
@@ -49,7 +60,7 @@ public class Controller {
         htmlW.generarHtml(meteo.getEstatisticsMeteo(), conta.getEstatisticsConta(), initTime, ciudad, path);
 
 
-        InformeController informe = InformeController.getInstance();
+        InformeService informe = InformeService.getInstance();
         informe.generarXMLbbdd(ciudad, meteo, conta);
 
         MarkdownWriter mdw = new MarkdownWriter();

@@ -1,4 +1,4 @@
-package controller;
+package service;
 
 
 import lombok.NonNull;
@@ -8,7 +8,6 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
-import service.MapeoCiudadCodigo;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,21 +20,26 @@ import java.util.Locale;
 /**
  * Clase que convierte los xml en objetos con el parser JAXB
  */
-public class XMLController {
-    private static XMLController controller = null;
+public class XMLService {
+    private static XMLService controller = null;
     private String uri = null;
     private Document data = null;
 
     //Se le pasa la uri del XML que vamos a mapear
-    private XMLController(String uri) {
+    private XMLService(String uri) {
         this.uri = uri;
     }
 
-    public static XMLController getInstance(@NonNull String uri) {
-        controller = new XMLController(uri);
+    public static XMLService getInstance(@NonNull String uri) {
+        controller = new XMLService(uri);
         return controller;
     }
 
+    /**
+     * Carga los datos en el Document
+     * @throws IOException
+     * @throws JDOMException
+     */
     public void loadData() throws IOException, JDOMException {
         data = new Document();
         this.data = data;
@@ -44,7 +48,11 @@ public class XMLController {
         this.data = builder.build(xmlFile);
     }
 
-    //Se le pasa una <medicion> y se mapean sus hijos
+    /**
+     * Filtra por ciudad y convierte a XML un CSV
+     * @param ciudad
+     * @return
+     */
     public List<Medicion> getMedicionesPorCiudad(String ciudad) {
         System.out.println("Se van a mapear los XML");
         Element root = this.data.getRootElement();

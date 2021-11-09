@@ -1,4 +1,4 @@
-package controller;
+package service;
 
 import lombok.NonNull;
 import org.jdom2.Document;
@@ -11,15 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class CSVController {
+public class CSVService {
 
-    private static CSVController controller;
+    private static CSVService controller;
     private String uri;
     private Document data = null;
     private List<Element> listaElementos = new ArrayList<>();
     private BufferedReader bf =null;
 
-    private CSVController(String uri) {
+    private CSVService(String uri) {
         this.uri=uri;
     }
 
@@ -29,10 +29,10 @@ public class CSVController {
      * @param uri
      * @return
      */
-    public static CSVController getInstance(@NonNull String uri) {
+    public static CSVService getInstance(@NonNull String uri) {
 
         if (controller == null)
-            controller = new CSVController(uri);
+            controller = new CSVService(uri);
         return controller;
     }
 
