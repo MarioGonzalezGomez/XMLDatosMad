@@ -21,7 +21,8 @@ public class InformeService {
     private static InformeService instance;
     private Marshaller marshaller;
     private Informe informe;
-    private String uri = System.getProperty("user.dir") + File.separator + "MeteoMadXML" + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + "db" + File.separator + "mediciones.xml";
+    // + File.separator + "MeteoMadXML"
+    private String uri = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator + "db" + File.separator + "mediciones.xml";
     private final File file = new File(uri);
     private Document doc;
 

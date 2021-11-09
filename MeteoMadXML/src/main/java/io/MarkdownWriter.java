@@ -1,10 +1,10 @@
 package io;
 
 
-import org.jdom2.Document;
-import org.jdom2.JDOMException;
+import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
@@ -22,19 +22,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MarkdownWriter {
-    private InformeXmlReader ixr;
-    private List<String> nombreCiudades;
+    private InformeXmlReader ixr = new InformeXmlReader();
+    private List<String> nombreCiudades = new LinkedList<>();
     String nombreDoc;
 
     /**
      * Un escritor que genera un archivo markdown en resources con los datos aportados en una List<String>
      */
-    public void generarMarkdown() throws IOException, XPathExpressionException, JDOMException {
+    public void generarMarkdown() throws IOException, XPathExpressionException, ParserConfigurationException, SAXException {
         List<String> texto = procesarMarkdown();
         nombreDoc = "informe";
         nombreCiudades.forEach(x -> nombreDoc = nombreDoc + "-" + x);
         Path path = Paths.get(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator
-                + "resources" + File.separator + "informes" + File.separator + nombreDoc + ".md");
+                + "resources" + File.separator + nombreDoc + ".md");
         Files.write(path, texto, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 
     }
@@ -49,13 +49,14 @@ public class MarkdownWriter {
      * @throws IOException
      * @throws SAXException
      */
-    private List<String> procesarMarkdown() throws XPathExpressionException, IOException, JDOMException {
+    private List<String> procesarMarkdown() throws XPathExpressionException, IOException, ParserConfigurationException, SAXException {
         List<String> textoMd = new LinkedList<>();
         Document d = ixr.leerInforme();
         XPath xp = XPathFactory.newInstance().newXPath();
-        NodeList informes = (NodeList) xp.compile("//informe").evaluate(d, XPathConstants.NODESET);
+        NodeList informes = (NodeList) xp.compile("informe").evaluate(d, XPathConstants.NODESET);
 
         for (int i = 0; i < informes.getLength(); i++) {
+            // System.out.println(xp.compile("./@uuid").evaluate(informes.item(i)));
 
             nombreCiudades.add(xp.compile("./nombreCiudad").evaluate(informes.item(i)));
 
@@ -66,22 +67,22 @@ public class MarkdownWriter {
             textoMd.add("##Datos Meteorológicos");
 
             textoMd.add("####Medias mensuales");
-            textoMd.add("-Velocidad del viento: " + xp.compile("./datos_meteorologicos/informacionMeteorologica[1]/mediaMensual").evaluate(informes.item(i)));
-            textoMd.add("-Temperatura: " + xp.compile("./datos_meteorologicos/informacionMeteorologica[3]/mediaMensual").evaluate(informes.item(i)));
-            textoMd.add("-Humedad Relativa: " + xp.compile("./datos_meteorologicos/informacionMeteorologica[4]/mediaMensual").evaluate(informes.item(i)));
-            textoMd.add("-Presión Atmosférica : " + xp.compile("./datos_meteorologicos/informacionMeteorologica[5]/mediaMensual").evaluate(informes.item(i)));
-            textoMd.add("-Raciación Solar: " + xp.compile("./datos_meteorologicos/informacionMeteorologica[6]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("- Velocidad del viento: " + xp.compile("./datos_meteorologicos/informacionMeteorologica[1]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("- Temperatura: " + xp.compile("./datos_meteorologicos/informacionMeteorologica[3]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("- Humedad Relativa: " + xp.compile("./datos_meteorologicos/informacionMeteorologica[4]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("- Presión Atmosférica : " + xp.compile("./datos_meteorologicos/informacionMeteorologica[5]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("- Raciación Solar: " + xp.compile("./datos_meteorologicos/informacionMeteorologica[6]/mediaMensual").evaluate(informes.item(i)));
 
             textoMd.add("---");
 
             textoMd.add("##Datos de Contaminación");
             textoMd.add("####Medias mensuales");
-            textoMd.add("-Monóxido de nitrógeno: " + xp.compile("./datos_contaminacion/informacionContaminacion[3]/mediaMensual").evaluate(informes.item(i)));
-            textoMd.add("-Dióxido de nitrógeno: " + xp.compile("./datos_contaminacion/informacionContaminacion[4]/mediaMensual").evaluate(informes.item(i)));
-            textoMd.add("-Partículas en suspensión PM2,5: " + xp.compile("./datos_contaminacion/informacionContaminacion[5]/mediaMensual").evaluate(informes.item(i)));
-            textoMd.add("-Partículas en suspensión PM10: " + xp.compile("./datos_contaminacion/informacionContaminacion[6]/mediaMensual").evaluate(informes.item(i)));
-            textoMd.add("-Óxido de nitrógeno: " + xp.compile("./datos_contaminacion/informacionContaminacion[7]/mediaMensual").evaluate(informes.item(i)));
-            textoMd.add("-Ozono: " + xp.compile("./datos_contaminacion/informacionContaminacion[8]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("- Monóxido de nitrógeno: " + xp.compile("./datos_contaminacion/informacionContaminacion[3]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("- Dióxido de nitrógeno: " + xp.compile("./datos_contaminacion/informacionContaminacion[4]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("- Partículas en suspensión PM2,5: " + xp.compile("./datos_contaminacion/informacionContaminacion[5]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("- Partículas en suspensión PM10: " + xp.compile("./datos_contaminacion/informacionContaminacion[6]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("- Óxido de nitrógeno: " + xp.compile("./datos_contaminacion/informacionContaminacion[7]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("- Ozono: " + xp.compile("./datos_contaminacion/informacionContaminacion[8]/mediaMensual").evaluate(informes.item(i)));
 
         }
         return textoMd;

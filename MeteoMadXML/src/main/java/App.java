@@ -1,27 +1,30 @@
 import controller.Controller;
 import org.jdom2.JDOMException;
+import org.xml.sax.SAXException;
 import service.Utiles;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class App {
-    public static void main(String[] args) throws IOException, JDOMException, JAXBException, XPathExpressionException {
+    public static void main(String[] args) throws IOException, JDOMException, JAXBException, XPathExpressionException, ParserConfigurationException, SAXException {
 
-        if (args.length != 2) {
-            System.out.println("Número de parámetros incorrecto: para usar este programa necesitas introducir dos parámetros: " +
-                    "1.nombre de la ciudad de la que se desean obtener los datos " +
-                    "2. directorio donde queremos guardar el informe resultante");
-        } else {
-            String ciudad = Utiles.normalizar(args[0]);
-            Path ruta = Paths.get(args[1]);
+        //if (args.length != 2) {
+        //    System.out.println("Número de parámetros incorrecto: para usar este programa necesitas introducir dos parámetros: " +
+        //"1.nombre de la ciudad de la que se desean obtener los datos " +
+         //       "2. directorio donde queremos guardar el informe resultante");
+        //  } else {
+        //   String ciudad = Utiles.normalizar(args[0]);
+        //   Path ruta = Paths.get(args[1]);
+        String ciudad = "leganes";
+        Path ruta = Paths.get("C:\\Users\\Mario\\Desktop\\AccesoDatos");
+        Controller controller = new Controller(ciudad, ruta);
 
-            Controller controller = new Controller(ciudad, ruta);
-
-        }
-    }
+   // }
+}
 }
 
