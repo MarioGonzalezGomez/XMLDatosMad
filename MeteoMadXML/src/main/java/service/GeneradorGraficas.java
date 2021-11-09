@@ -1,26 +1,24 @@
 
-
 package service;
 
 
 import model.Medicion;
+import model.MedicionHora;
 import model.MedicionesMeteo;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.DoubleSummaryStatistics;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
 
@@ -33,8 +31,7 @@ public class GeneradorGraficas {
 
 
 
-
-/**
+    /**
      * Utilizando la librería JFreeChart, esta clase implementa el código necesario para generar las gráficas de las
      * mediciones. Adicionalmente, utiliza condiciones con un index para poder hacer gráficos personalizados y
      * más adecuados para cada tipo de dato
@@ -44,9 +41,6 @@ public class GeneradorGraficas {
      * @param nombreTabla
      * @return
      */
-
-
-
     private JFreeChart hacerGrafica(List<Double> diarias, int index, String nombreTabla) {
         JFreeChart grafica = null;
         //Para las gráficas de pastel debemos hacer DefaultPieDataset
@@ -75,15 +69,12 @@ public class GeneradorGraficas {
 
 
 
-
-/**
-     * Este método llama a la clase GeneradorGraficas para generar las imágenes que utilizaremos en el html. Estas se incorporan en el propio documento html
+    /**
+     * Este método genera las imágenes que utilizaremos en el html. Estas se incorporan en el propio documento html
      * y derivan de los mismos datos que se expondrán en el informe.
      *
-     * @param mm
      * @throws IOException
      */
-
 
 
 
@@ -91,25 +82,36 @@ public class GeneradorGraficas {
         List<DoubleStream> prueba = new LinkedList<>();
 
 
-        mm.getTemperatura().stream().map(Medicion::getMedicionesHoras).forEach(medicionHoras -> {
-            mediasDiariasTemp.add(medicionHoras.stream().map(y -> y.getMedicion()).mapToDouble(y -> y).average().getAsDouble());
-        });
+        Double media;
 
-        mm.getVelocidadViento().stream().map(x -> x.getMedicionesHoras()).forEach(x -> {
-            mediasDiariasVelVient.add(x.stream().map(y -> y.getMedicion()).mapToDouble(y -> y).average().getAsDouble());
-        });
+        for (Medicion meed : mm.getTemperatura()
+        ) {
+            media = meed.getMedicionesHoras().stream().filter(me -> me.getMedicion() != null)
+                    .collect(Collectors.summarizingDouble(MedicionHora::getMedicion)).getAverage();
+            mediasDiariasTemp.add(media);
+        }
 
-        mm.getHumedadRelativa().stream().map(x -> x.getMedicionesHoras()).forEach(x -> {
-            mediasDiariasHumedad.add(x.stream().map(y -> y.getMedicion()).mapToDouble(y -> y).average().getAsDouble());
-        });
+        for (Medicion meed : mm.getHumedadRelativa()
+        ) {
+            media = meed.getMedicionesHoras().stream().filter(me -> me.getMedicion() != null)
+                    .collect(Collectors.summarizingDouble(MedicionHora::getMedicion)).getAverage();
+            mediasDiariasHumedad.add(media);
+        }
 
-        mm.getPresionAtmosferica().stream().map(x -> x.getMedicionesHoras()).forEach(x -> {
-            mediasDiariasPresion.add(x.stream().map(y -> y.getMedicion()).mapToDouble(y -> y).average().getAsDouble());
-        });
+        for (Medicion meed : mm.getRadiacionSolar()
+        ) {
+            media = meed.getMedicionesHoras().stream().filter(me -> me.getMedicion() != null)
+                    .collect(Collectors.summarizingDouble(MedicionHora::getMedicion)).getAverage();
+            mediasDiariasSolar.add(media);
+        }
 
-        mm.getRadiacionSolar().stream().map(x -> x.getMedicionesHoras()).forEach(x -> {
-            mediasDiariasSolar.add(x.stream().map(y -> y.getMedicion()).mapToDouble(y -> y).average().getAsDouble());
-        });
+        for (Medicion meed : mm.getVelocidadViento()
+        ) {
+            media = meed.getMedicionesHoras().stream().filter(me -> me.getMedicion() != null)
+                    .collect(Collectors.summarizingDouble(MedicionHora::getMedicion)).getAverage();
+            mediasDiariasVelVient.add(media);
+        }
+
 
         try {
             Files.createDirectory(Paths.get(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "graficas"));
@@ -118,24 +120,23 @@ public class GeneradorGraficas {
         }
 
         JFreeChart graficoTemp = hacerGrafica(mediasDiariasTemp, 2, "Temperatura");
-        File graficoTemperatura = new File(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "graficas" + File.separator + "graficoTemp");
+        File graficoTemperatura = new File(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "graficas" + File.separator + "graficoTemp.png");
         ChartUtils.saveChartAsPNG(graficoTemperatura, graficoTemp, 600, 400);
 
         JFreeChart graficoSolar = hacerGrafica(mediasDiariasSolar, 5, "Radiación Solar");
-        File graficoRadiacionSolar = new File(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "graficas" + File.separator + "graficoSolar");
+        File graficoRadiacionSolar = new File(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "graficas" + File.separator + "graficoSolar.png");
         ChartUtils.saveChartAsPNG(graficoRadiacionSolar, graficoSolar, 600, 400);
 
         JFreeChart graficoHum = hacerGrafica(mediasDiariasHumedad, 3, "Humedad relativa");
-        File graficoHumedad = new File(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "graficas" + File.separator + "graficoHumedad");
+        File graficoHumedad = new File(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "graficas" + File.separator + "graficoHumedad.png");
         ChartUtils.saveChartAsPNG(graficoHumedad, graficoHum, 600, 400);
 
         JFreeChart graficoViento = hacerGrafica(mediasDiariasVelVient, 0, "Velocidad del viento");
-        File graficoVelocidadCiento = new File(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "graficas" + File.separator + "graficoViento");
+        File graficoVelocidadCiento = new File(System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "graficas" + File.separator + "graficoViento.png");
         ChartUtils.saveChartAsPNG(graficoVelocidadCiento, graficoViento, 600, 400);
 
     }
 }
-
 
 
 

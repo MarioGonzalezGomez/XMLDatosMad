@@ -53,25 +53,36 @@ public class MarkdownWriter {
         List<String> textoMd = new LinkedList<>();
         Document d = ixr.leerInforme();
         XPath xp = XPathFactory.newInstance().newXPath();
-        NodeList ciudades = (NodeList) xp.compile("//resultado").evaluate(d, XPathConstants.NODESET);
+        NodeList informes = (NodeList) xp.compile("//informe").evaluate(d, XPathConstants.NODESET);
 
-        for (int i = 0; i < ciudades.getLength(); i++) {
+        for (int i = 0; i < informes.getLength(); i++) {
 
-            nombreCiudades.add(xp.compile("./ciudad").evaluate(ciudades.item(i)));
+            nombreCiudades.add(xp.compile("./nombreCiudad").evaluate(informes.item(i)));
 
-            textoMd.add("##Informe de " + xp.compile("./ciudad").evaluate(ciudades.item(i)));
-            textoMd.add("-Fecha de inicio de la medición: " + xp.compile("./fxinicio").evaluate(ciudades.item(i)));
-            textoMd.add("-Fecha de fin de la medición: " + xp.compile("./fxfin").evaluate(ciudades.item(i)));
+            textoMd.add("##Informe de " + xp.compile("./nombreCiudad").evaluate(informes.item(i)));
+            //textoMd.add("-Fecha de inicio de la medición: " + xp.compile("./fxinicio").evaluate(ciudades.item(i)));
+            //textoMd.add("-Fecha de fin de la medición: " + xp.compile("./fxfin").evaluate(ciudades.item(i)));
             textoMd.add("---");
             textoMd.add("##Datos Meteorológicos");
+
             textoMd.add("####Medias mensuales");
-            textoMd.add("-Precipitación: " + xp.compile("./datos-meteorologicos/precipitacion/media").evaluate(ciudades.item(i)));
-            //... no olvidar los - para que sea lista.
+            textoMd.add("-Velocidad del viento: " + xp.compile("./datos_meteorologicos/informacionMeteorologica[1]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("-Temperatura: " + xp.compile("./datos_meteorologicos/informacionMeteorologica[3]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("-Humedad Relativa: " + xp.compile("./datos_meteorologicos/informacionMeteorologica[4]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("-Presión Atmosférica : " + xp.compile("./datos_meteorologicos/informacionMeteorologica[5]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("-Raciación Solar: " + xp.compile("./datos_meteorologicos/informacionMeteorologica[6]/mediaMensual").evaluate(informes.item(i)));
+
             textoMd.add("---");
+
             textoMd.add("##Datos de Contaminación");
             textoMd.add("####Medias mensuales");
-            textoMd.add("-Dióxido de azufre: " + xp.compile("./datos-contaminacion/dioxido-azufre/media").evaluate(ciudades.item(i)));
-            //... no olvidar los - para que sea lista.
+            textoMd.add("-Monóxido de nitrógeno: " + xp.compile("./datos_contaminacion/informacionContaminacion[3]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("-Dióxido de nitrógeno: " + xp.compile("./datos_contaminacion/informacionContaminacion[4]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("-Partículas en suspensión PM2,5: " + xp.compile("./datos_contaminacion/informacionContaminacion[5]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("-Partículas en suspensión PM10: " + xp.compile("./datos_contaminacion/informacionContaminacion[6]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("-Óxido de nitrógeno: " + xp.compile("./datos_contaminacion/informacionContaminacion[7]/mediaMensual").evaluate(informes.item(i)));
+            textoMd.add("-Ozono: " + xp.compile("./datos_contaminacion/informacionContaminacion[8]/mediaMensual").evaluate(informes.item(i)));
+
         }
         return textoMd;
     }

@@ -11,8 +11,6 @@ public class InformacionMedicion {
     private Double mediaMensual;
     private MedicionHora momentoYMaxima;
     private MedicionHora momentoYMinima;
-    //private Object grafica; ///cambiar a JFreeChart tanto aqui como en getters y setters
-
 
 
 @XmlAttribute

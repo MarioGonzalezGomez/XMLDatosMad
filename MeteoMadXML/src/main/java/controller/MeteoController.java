@@ -4,7 +4,7 @@ import lombok.Data;
 import model.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 @Data
 public class MeteoController {

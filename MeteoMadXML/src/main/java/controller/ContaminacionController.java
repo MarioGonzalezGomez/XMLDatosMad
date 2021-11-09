@@ -10,7 +10,7 @@ import java.util.List;
 public class ContaminacionController {
 
 
-    List<Medicion>listaConta = new ArrayList<>();
+    List<Medicion>listaConta;
     MedicionesContaminacion medicionesContaminacion = new MedicionesContaminacion();
 
     public ContaminacionController(List<Medicion> listaConta) {
@@ -110,9 +110,6 @@ public class ContaminacionController {
         }
     }
 
-
-    //Hay que refactorizar este código para que reciba por parametro una lista genérica y le genere las estadisticas solo a esa lista.
-    //Desde otra clase se podrá usar este método dentro de un bucle que genere las estadísticas de todas las listas
     public List<InformacionMedicion> getEstatisticsConta() {
         filtrarMagnitudesContaminacion();
         List<InformacionMedicion> listaEstadisticas = new ArrayList<>();

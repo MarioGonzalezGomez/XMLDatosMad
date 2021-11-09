@@ -1,10 +1,12 @@
 package controller;
 
 import io.HtmlWriter;
+import io.MarkdownWriter;
 import org.jdom2.JDOMException;
 import service.GeneradorGraficas;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -12,7 +14,7 @@ import java.nio.file.Path;
 public class Controller {
 
 
-    public Controller(String ciudad, Path path) throws IOException, JDOMException, JAXBException {
+    public Controller(String ciudad, Path path) throws IOException, JDOMException, JAXBException, XPathExpressionException {
 
         String uriResources =  System.getProperty("user.dir") + File.separator + "MeteoMadXML" + File.separator + "src" + File.separator + "main" + File.separator + "resources";
         String CSV_meteo =uriResources+ File.separator + "calidad_aire_datos_meteo_mes.csv";
@@ -49,6 +51,9 @@ public class Controller {
 
         InformeController informe = InformeController.getInstance();
         informe.generarXMLbbdd(ciudad, meteo, conta);
+
+        MarkdownWriter mdw = new MarkdownWriter();
+        mdw.generarMarkdown();
     }
 
     }

@@ -1,10 +1,6 @@
 package model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.xml.bind.annotation.*;
-import java.time.LocalDate;
 import java.util.List;
 
 @XmlRootElement

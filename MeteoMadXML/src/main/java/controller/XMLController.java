@@ -22,9 +22,9 @@ import java.util.Locale;
  * Clase que convierte los xml en objetos con el parser JAXB
  */
 public class XMLController {
-    private static XMLController controller=null;
-    private String uri=null;
-    private Document data=null;
+    private static XMLController controller = null;
+    private String uri = null;
+    private Document data = null;
 
     //Se le pasa la uri del XML que vamos a mapear
     private XMLController(String uri) {
@@ -32,13 +32,13 @@ public class XMLController {
     }
 
     public static XMLController getInstance(@NonNull String uri) {
-            controller = new XMLController(uri);
+        controller = new XMLController(uri);
         return controller;
     }
 
     public void loadData() throws IOException, JDOMException {
-        data= new Document();
-        this.data=data;
+        data = new Document();
+        this.data = data;
         SAXBuilder builder = new SAXBuilder();
         File xmlFile = new File(this.uri);
         this.data = builder.build(xmlFile);
@@ -79,14 +79,8 @@ public class XMLController {
                     MedicionHora medicionHora = new MedicionHora(null, null);
                     medicion.getMedicionesHoras().add(medicionHora);
                 }
-
-
-                System.out.println(medicion.toString());
             }
-
-
             medicionesLista.add(medicion);
-            //System.out.println(medicion);
         });
         return medicionesLista;
     }

@@ -1,13 +1,6 @@
 package model;
 
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.xml.bind.annotation.XmlType;
-import java.sql.Time;
-
-
 
 @XmlType(propOrder = {"medicion", "hora"})
 public class MedicionHora {
@@ -23,11 +16,7 @@ public class MedicionHora {
     public MedicionHora(Double medicion){
         this.medicion=medicion;
 
-
     }
-
-
-
 
 
     public Double getMedicion() {
