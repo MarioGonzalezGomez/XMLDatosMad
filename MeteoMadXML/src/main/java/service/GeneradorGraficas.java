@@ -1,4 +1,5 @@
 
+
 package service;
 
 
@@ -32,6 +33,7 @@ public class GeneradorGraficas {
 
 
 
+
 /**
      * Utilizando la librería JFreeChart, esta clase implementa el código necesario para generar las gráficas de las
      * mediciones. Adicionalmente, utiliza condiciones con un index para poder hacer gráficos personalizados y
@@ -42,6 +44,7 @@ public class GeneradorGraficas {
      * @param nombreTabla
      * @return
      */
+
 
 
     private JFreeChart hacerGrafica(List<Double> diarias, int index, String nombreTabla) {
@@ -72,6 +75,7 @@ public class GeneradorGraficas {
 
 
 
+
 /**
      * Este método llama a la clase GeneradorGraficas para generar las imágenes que utilizaremos en el html. Estas se incorporan en el propio documento html
      * y derivan de los mismos datos que se expondrán en el informe.
@@ -79,6 +83,7 @@ public class GeneradorGraficas {
      * @param mm
      * @throws IOException
      */
+
 
 
 
@@ -130,6 +135,7 @@ public class GeneradorGraficas {
 
     }
 }
+
 
 
 

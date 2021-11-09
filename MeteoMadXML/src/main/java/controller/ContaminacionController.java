@@ -1,12 +1,11 @@
 package controller;
 
-import model.*;
+import model.InformacionMedicion;
+import model.Medicion;
+import model.MedicionesContaminacion;
 
 import java.util.ArrayList;
-import java.util.DoubleSummaryStatistics;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 public class ContaminacionController {
 
